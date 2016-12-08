@@ -16,7 +16,7 @@ namespace AddressBook.Migrations
                         FirstName = c.String(),
                         LastName = c.String(),
                         PhoneNumber = c.String(),
-                        StreetName = c.String(),
+                        Street = c.String(),
                         City = c.String(),
                         Province = c.String(),
                         PostalCode = c.String(),

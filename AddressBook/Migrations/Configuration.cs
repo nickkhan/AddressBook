@@ -65,7 +65,7 @@ namespace AddressBook.Migrations
                     PhoneNumber = "647-999-9999",
                     PostalCode = "L5C1G5",
                     Country = "CA",
-                    StreetName = "64 blairholm ave"
+                    Street = "64 blairholm ave"
                   },
                   new Contact()
                   {
@@ -77,7 +77,7 @@ namespace AddressBook.Migrations
                     PhoneNumber = "647-999-9999",
                     PostalCode = "P3E5M4",
                     Country = "CA",
-                    StreetName = "885 Regent St"
+                    Street = "885 Regent St"
                   }
               },
 
@@ -97,7 +97,7 @@ namespace AddressBook.Migrations
                         PhoneNumber = "647-999-9999",
                         PostalCode = "M2N2M2",
                         Country ="CA",
-                        StreetName ="20 Yonge St"
+                        Street ="20 Yonge St"
                       },
                       new Contact()
                       {
@@ -109,7 +109,7 @@ namespace AddressBook.Migrations
                         PhoneNumber = "647-999-9999",
                         PostalCode = "R3T2S2",
                         Country = "CA",
-                        StreetName = "631 Grierson ave"
+                        Street = "631 Grierson ave"
                       }
                   }
               },

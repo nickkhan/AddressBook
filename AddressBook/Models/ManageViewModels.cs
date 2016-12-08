@@ -26,9 +26,21 @@ namespace AddressBook.Models
     {
         public string userId { get; set; }
         public string UserName { get; set; }
-
         public string Role { get; set; }
         public List<Contact> contacts { get; set; }
+    }
+
+    public class ContactViewModel
+    {
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string Province { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
     }
 
     public class ManageLoginsViewModel

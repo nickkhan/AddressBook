@@ -14,7 +14,10 @@ namespace AddressBook.Controllers
             {
                 return RedirectToAction("Index", "AddressBook");
             }
-            return View();
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public ActionResult About()

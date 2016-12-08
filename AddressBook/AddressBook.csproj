@@ -204,9 +204,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612081128212_AddApplicationUser.cs" />
-    <Compile Include="Migrations\201612081128212_AddApplicationUser.Designer.cs">
-      <DependentUpon>201612081128212_AddApplicationUser.cs</DependentUpon>
+    <Compile Include="Migrations\201612082258593_AddApplicationUser.cs" />
+    <Compile Include="Migrations\201612082258593_AddApplicationUser.Designer.cs">
+      <DependentUpon>201612082258593_AddApplicationUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +283,9 @@
     <Content Include="Views\Manage\AddUser.cshtml" />
     <Content Include="Views\Manage\EditUser.cshtml" />
     <Content Include="Views\Manage\DeleteUser.cshtml" />
+    <Content Include="Views\AddressBook\AddContact.cshtml" />
+    <Content Include="Views\AddressBook\EditContact.cshtml" />
+    <Content Include="Views\AddressBook\DeleteContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -299,8 +302,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612081128212_AddApplicationUser.resx">
-      <DependentUpon>201612081128212_AddApplicationUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612082258593_AddApplicationUser.resx">
+      <DependentUpon>201612082258593_AddApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
