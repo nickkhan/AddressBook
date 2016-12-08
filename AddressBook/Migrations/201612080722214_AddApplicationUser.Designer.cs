@@ -7,13 +7,13 @@ namespace AddressBook.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddContact : IMigrationMetadata
+    public sealed partial class AddApplicationUser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddContact));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddApplicationUser));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612080508444_AddContact"; }
+            get { return "201612080722214_AddApplicationUser"; }
         }
         
         string IMigrationMetadata.Source
