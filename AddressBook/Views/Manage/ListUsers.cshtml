@@ -1,0 +1,50 @@
+﻿@model AddressBook.Models.ApplicationUserViewModel
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>User Management</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Add New:</dt>
+        <dd>
+            [
+
+            @Html.ActionLink("Add New User", "AddUser")
+
+            ]
+        </dd>
+    </dl>
+
+    <table style="border:1px solid black">
+
+        <tr style="border: solid">
+            <th style="border: solid">First Name</th>
+            <th style="border: solid">Last Name</th>
+            <th style="border: solid">UserName</th>
+        </tr>
+
+        @foreach (var user in Model.ApplicationUserList)
+        {
+            <tr>
+                <td style="border: solid">@user.FirstName</td>
+                <td style="border: solid">@user.LastName</td>
+                <td style="border: solid">@user.UserName</td>
+                <td>
+                    [
+                        @Html.ActionLink("Edit User", "EditUser", new { id = user.Id})
+                    ]
+                </td>
+                <td>
+                    [
+                        @Html.ActionLink("Delete User", "DeleteUser", new { id= user.Id})
+                    ]
+                </td>
+            </tr>
+        }
+    </table>
+</div>

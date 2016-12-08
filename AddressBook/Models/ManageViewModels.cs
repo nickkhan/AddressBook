@@ -17,6 +17,11 @@ namespace AddressBook.Models
         public string LastName { get; set; }
     }
 
+    public class ApplicationUserViewModel
+    {
+       public List<ApplicationUser> ApplicationUserList {get;set;}
+    }
+
     public class AddressBookViewModel
     {
         public string userId { get; set; }
@@ -113,7 +118,61 @@ namespace AddressBook.Models
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
     }
+    public class AddApplicationUserViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string UserName { get; set; }
+    }
+    public class EditApplicationUserViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        
+        [DataType(DataType.EmailAddress)]
+        public string OldUserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string NewUserName { get; set; }
+
+    }
+    public class DeleteApplicationUserViewModel
+    {
+        
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string UserName { get; set; }
+
+    }
     public class VerifyPhoneNumberViewModel
     {
         [Required]

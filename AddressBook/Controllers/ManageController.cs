@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AddressBook.Models;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace AddressBook.Controllers
 {
@@ -84,6 +85,35 @@ namespace AddressBook.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> ListUsers(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.ChangeEmailAddressSuccess ? "Your email has been changed."
+                : message == ManageMessageId.ChangeFirstNameSuccess ? "Your first name has been changed."
+                : message == ManageMessageId.ChangeLastNameSuccess ? "Your last name has been changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.AddUserSuccess ? "User added successfully"
+                : message == ManageMessageId.EditUserSuccess? "User edited successfully"
+                : message == ManageMessageId.DeleteUserSuccess ? "User deleted successfully"
+                : "";
+        
+            var users = UserManager.Users.ToList();
+            ApplicationUserViewModel appUserList = new ApplicationUserViewModel();
+            appUserList.ApplicationUserList = users;
+
+            var userId = User.Identity.GetUserId();
+            var appuser = UserManager.FindById(userId);
+            ViewBag.Role = appuser.Claims.Where(e => e.ClaimType == ClaimTypes.Role).FirstOrDefault().ClaimValue;
+
+            return View(appUserList);
+        }
+
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
@@ -137,6 +167,124 @@ namespace AddressBook.Controllers
                 await UserManager.SmsService.SendAsync(message);
             }
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+        }
+        //
+        // GET: /Manage/AddUser
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/AddPhoneNumber
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddUser(AddApplicationUserViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            ApplicationUser user = new ApplicationUser();
+            user.Email = model.UserName;
+            user.UserName = model.UserName;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            PasswordHasher hash = new PasswordHasher();
+            string passwordhash = hash.HashPassword("password");
+
+            var result = await UserManager.CreateAsync(user, passwordhash);
+            if(result.Succeeded)
+                return RedirectToAction("ListUsers","Manage", new { Message = ManageMessageId.AddUserSuccess });
+            
+            return View("Error");
+        }
+
+
+        //
+        // GET: /Manage/EditUser
+        public ActionResult EditUser(string id)
+        {
+            
+            var appuser = UserManager.FindById(id);
+            var model = new EditApplicationUserViewModel
+            {
+                FirstName = appuser.FirstName,
+                LastName = appuser.LastName,
+                OldUserName = appuser.UserName
+            };
+
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/EditUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUser(EditApplicationUserViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var userId = User.Identity.GetUserId();
+            var appuser = UserManager.FindById(userId);
+            ViewBag.Role = appuser.Claims.Where(e => e.ClaimType == ClaimTypes.Role).FirstOrDefault().ClaimValue;
+
+            var user = await UserManager.FindByEmailAsync(model.OldUserName);
+
+            if (user!=null)
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.UserName = model.NewUserName;
+                user.Email = model.NewUserName;
+            }
+
+            var result = await UserManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+                return RedirectToAction("ListUsers", "Manage", new { Message = ManageMessageId.EditUserSuccess });
+
+            return View("Error");
+        }
+
+
+        //
+        // GET: /Manage/DeleteUser
+        public ActionResult DeleteUser(string id)
+        {
+            var userId = User.Identity.GetUserId();
+            var appuser = UserManager.FindById(userId);
+            ViewBag.Role = appuser.Claims.Where(e => e.ClaimType == ClaimTypes.Role).FirstOrDefault().ClaimValue;
+
+            var user = UserManager.FindById(id);
+            var model = new DeleteApplicationUserViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName
+            };
+
+            return View(model);
+        }
+        //
+        // POST: /Manage/DeleteUser
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteUser(DeleteApplicationUserViewModel model)
+        {
+            var user = await UserManager.FindByNameAsync(model.UserName);
+
+            if (user != null)
+            {
+                var result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("ListUsers", "Manage", new { Message = ManageMessageId.DeleteUserSuccess });
+            }
+
+            return View("Error");
         }
 
         //
@@ -506,6 +654,9 @@ namespace AddressBook.Controllers
 
         public enum ManageMessageId
         {
+            AddUserSuccess,
+            EditUserSuccess,
+            DeleteUserSuccess,
             AddPhoneSuccess,
             ChangePasswordSuccess,
             ChangeEmailAddressSuccess,

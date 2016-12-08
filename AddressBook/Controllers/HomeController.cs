@@ -12,7 +12,7 @@ namespace AddressBook.Controllers
         {
             if(Request.IsAuthenticated)
             {
-
+                return RedirectToAction("Index", "AddressBook");
             }
             return View();
         }

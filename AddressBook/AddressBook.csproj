@@ -279,6 +279,10 @@
     <Content Include="Views\Manage\ChangeFirstName.cshtml" />
     <Content Include="Views\Manage\ChangeLastName.cshtml" />
     <Content Include="Views\AddressBook\Index.cshtml" />
+    <Content Include="Views\Manage\ListUsers.cshtml" />
+    <Content Include="Views\Manage\AddUser.cshtml" />
+    <Content Include="Views\Manage\EditUser.cshtml" />
+    <Content Include="Views\Manage\DeleteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
