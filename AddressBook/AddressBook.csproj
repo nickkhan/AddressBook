@@ -198,14 +198,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AddressBookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612080807514_AddApplicationUser.cs" />
-    <Compile Include="Migrations\201612080807514_AddApplicationUser.Designer.cs">
-      <DependentUpon>201612080807514_AddApplicationUser.cs</DependentUpon>
+    <Compile Include="Migrations\201612081128212_AddApplicationUser.cs" />
+    <Compile Include="Migrations\201612081128212_AddApplicationUser.Designer.cs">
+      <DependentUpon>201612081128212_AddApplicationUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -277,6 +278,7 @@
     <Content Include="Views\Manage\ChangeEmailAddress.cshtml" />
     <Content Include="Views\Manage\ChangeFirstName.cshtml" />
     <Content Include="Views\Manage\ChangeLastName.cshtml" />
+    <Content Include="Views\AddressBook\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,8 +295,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612080807514_AddApplicationUser.resx">
-      <DependentUpon>201612080807514_AddApplicationUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612081128212_AddApplicationUser.resx">
+      <DependentUpon>201612081128212_AddApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

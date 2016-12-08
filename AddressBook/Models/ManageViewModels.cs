@@ -17,6 +17,15 @@ namespace AddressBook.Models
         public string LastName { get; set; }
     }
 
+    public class AddressBookViewModel
+    {
+        public string userId { get; set; }
+        public string UserName { get; set; }
+
+        public string Role { get; set; }
+        public List<Contact> contacts { get; set; }
+    }
+
     public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }

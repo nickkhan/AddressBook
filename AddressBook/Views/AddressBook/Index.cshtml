@@ -1,0 +1,63 @@
+﻿@model AddressBook.Models.AddressBookViewModel
+@{
+    ViewBag.Title = "Address Book";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p>Welcome @Model.UserName</p>
+<p>You are logged in as <b>@Model.Role</b> user.</p>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Add New Contact</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Contact :</dt>
+        <dd>            [
+
+            @Html.ActionLink("Add new contact", "AddNewContact")
+
+            ]
+        </dd>
+        <dt>Edit Contact:</dt>
+        <dd>
+            [
+
+            @Html.ActionLink("Change your last name", "ChangeLastName")
+
+            ]
+        </dd>
+        <dt>Delete Contact:</dt>
+        <dd>
+            [
+            
+               @Html.ActionLink("Change your email address", "ChangeEmailAddress")
+            
+            ]
+        </dd>
+    </dl>
+
+    <table style="border:1px solid black">
+
+        <tr style="border: solid">
+            <th style="border: solid">First Name</th>            
+            <th style="border: solid">Last Name</th>         
+            <th style="border: solid">Street Name</th>            
+            <th style="border: solid">City</th>            
+            <th style="border: solid">Province</th>    
+            <th style="border: solid">Country</th>            
+        </tr>
+        
+        @foreach (var contact in Model.contacts)
+        {
+            <tr>
+                <td style="border: solid">@contact.FirstName</td>
+                <td  style="border: solid">@contact.LastName</td>
+                <td  style="border: solid">@contact.StreetName</td>
+                <td  style="border: solid">@contact.City</td>
+                <td  style="border: solid">@contact.Province</td>
+                <td  style="border: solid">@contact.Country</td>
+            </tr>
+        }
+    </table>
+</div>

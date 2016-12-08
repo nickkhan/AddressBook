@@ -11,6 +11,11 @@ namespace AddressBook.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUser_ID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

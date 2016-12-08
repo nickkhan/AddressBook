@@ -10,6 +10,10 @@ namespace AddressBook.Controllers
     {
         public ActionResult Index()
         {
+            if(Request.IsAuthenticated)
+            {
+
+            }
             return View();
         }
 

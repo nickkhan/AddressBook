@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AddressBook.Models;
+using System.Security.Claims;
 
 namespace AddressBook.Controllers
 {
@@ -79,7 +80,7 @@ namespace AddressBook.Controllers
                 FirstName = appuser.FirstName,
                 LastName = appuser.LastName
             };
-
+            ViewBag.Role = appuser.Claims.Where(e => e.ClaimType == ClaimTypes.Role).FirstOrDefault().ClaimValue;
             return View(model);
         }
 

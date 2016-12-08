@@ -164,3 +164,4 @@ C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.dll
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.pdb
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.Migrations.AddApplicationUser.resources
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.csproj.GenerateResource.Cache
+C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.csprojResolveAssemblyReference.cache

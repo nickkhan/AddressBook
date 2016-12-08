@@ -11,6 +11,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using AddressBook.Models;
+using System.Net.Mail;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace AddressBook
 {
@@ -18,7 +22,20 @@ namespace AddressBook
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
+            SmtpClient client = new SmtpClient("mail.jmqtnonsense.ca", 587);
+
+            client.UseDefaultCredentials = false;
+            client.EnableSsl = true;
+            client.Credentials = new NetworkCredential("no-reply@jmqtnonsense.ca", "ZMG59k7v");
+
+            MailMessage msg = new MailMessage("no-reply@jmqtnonsense.ca", message.Destination, message.Subject, message.Body);
+
+            ServicePointManager.ServerCertificateValidationCallback =
+            delegate (object s, X509Certificate certificate,
+               X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            { return true; };
+
+            client.Send(msg);
             return Task.FromResult(0);
         }
     }
