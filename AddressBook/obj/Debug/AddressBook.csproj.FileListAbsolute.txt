@@ -162,8 +162,5 @@ C:\Projects\AddressBook\AddressBook\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Projects\AddressBook\AddressBook\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.dll
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.pdb
-C:\Projects\AddressBook\AddressBook\bin\AutoMapper.dll
-C:\Projects\AddressBook\AddressBook\bin\AutoMapper.xml
-C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.csprojResolveAssemblyReference.cache
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.Migrations.AddApplicationUser.resources
 C:\Projects\AddressBook\AddressBook\obj\Debug\AddressBook.csproj.GenerateResource.Cache

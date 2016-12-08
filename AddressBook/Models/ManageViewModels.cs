@@ -12,6 +12,9 @@ namespace AddressBook.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        public string EmailAddress { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -20,10 +23,7 @@ namespace AddressBook.Models
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
-    public class FactorViewModel
-    {
-        public string Purpose { get; set; }
-    }
+
 
     public class SetPasswordViewModel
     {
@@ -58,6 +58,45 @@ namespace AddressBook.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeEmailAddressViewModel
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Old Email Address")]
+        public string OldEmailAddress { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string NewEmailAddress { get; set; }
+    }
+
+    public class ChangeFirstNameViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Old First Name")]
+        public string OldFirstName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string NewFirstName { get; set; }
+    }
+
+    public class ChangeLastNameViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Old Last Name")]
+        public string OldLastName { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string NewLastName { get; set; }
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]
@@ -78,9 +117,5 @@ namespace AddressBook.Models
         public string PhoneNumber { get; set; }
     }
 
-    public class ConfigureTwoFactorViewModel
-    {
-        public string SelectedProvider { get; set; }
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
-    }
+
 }

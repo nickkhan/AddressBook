@@ -56,6 +56,9 @@ namespace AddressBook.Controllers
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.ChangeEmailAddressSuccess ? "Your email has been changed."
+                : message == ManageMessageId.ChangeFirstNameSuccess? "Your first name has been changed."
+                : message == ManageMessageId.ChangeLastNameSuccess ? "Your last name has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "An error has occurred."
@@ -64,14 +67,19 @@ namespace AddressBook.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var appuser = UserManager.FindById(userId);
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                EmailAddress = appuser.Email,
+                FirstName = appuser.FirstName,
+                LastName = appuser.LastName
             };
+
             return View(model);
         }
 
@@ -221,6 +229,56 @@ namespace AddressBook.Controllers
         }
 
         //
+        // GET: /Manage/ChangeFirstName
+        public async Task<ActionResult> ChangeFirstName()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                var model = new ChangeFirstNameViewModel
+                {
+                    OldFirstName = user.FirstName
+                };
+                return View(model);
+            }
+
+            return View("Error");
+        }
+
+        //
+        // GET: /Manage/ChangeLastName
+        public async Task<ActionResult> ChangeLastName()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                var model = new ChangeLastNameViewModel
+                {
+                    OldLastName = user.LastName
+                };
+                return View(model);
+            }
+
+            return View("Error");
+        }
+        //
+        // GET: /Manage/ChangeEmailAddress
+        public async Task<ActionResult> ChangeEmailAddress()
+        {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                var model = new ChangeEmailAddressViewModel
+                {                    
+                    OldEmailAddress = user.Email                    
+                };
+                return View(model);
+            }
+
+            return View("Error");
+        }
+
+        //
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -241,6 +299,78 @@ namespace AddressBook.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeEmailAddress
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeEmailAddress(ChangeEmailAddressViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await UserManager.FindByEmailAsync(model.OldEmailAddress);
+            if (user!=null)
+            {
+                user.UserName = model.NewEmailAddress;
+                user.Email = model.NewEmailAddress;
+                await UserManager.UpdateAsync(user);
+
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeEmailAddressSuccess });
+            }
+
+            ModelState.AddModelError("", "Failed to change email address");
+            return View(model);            
+        }
+
+        //
+        // POST: /Manage/ChangeFirstName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeFirstName(ChangeFirstNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                user.FirstName = model.NewFirstName;                
+                await UserManager.UpdateAsync(user);
+
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeFirstNameSuccess });
+            }
+
+            ModelState.AddModelError("", "Failed to change first name");
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeLastName
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeLastName(ChangeLastNameViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            if (user != null)
+            {
+                user.LastName = model.NewLastName;
+                await UserManager.UpdateAsync(user);
+
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeLastNameSuccess });
+            }
+
+            ModelState.AddModelError("", "Failed to change last name");
             return View(model);
         }
 
@@ -377,6 +507,9 @@ namespace AddressBook.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeEmailAddressSuccess,
+            ChangeFirstNameSuccess,
+            ChangeLastNameSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,

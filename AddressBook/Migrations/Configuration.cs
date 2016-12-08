@@ -8,6 +8,7 @@ namespace AddressBook.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Security.Claims;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AddressBook.Models.AddressBookContext>
     {
@@ -34,7 +35,7 @@ namespace AddressBook.Migrations
                 {
                     Name = "Admin"
                 };
-                rolemanager.Create(role);
+                rolemanager.Create(role);                
             }
 
             if (!context.Roles.Any(r => r.Name == "Normal"))
@@ -46,13 +47,14 @@ namespace AddressBook.Migrations
                 rolemanager.Create(role);
             }
 
+            
             var passwordHash = new PasswordHasher();
             string password = passwordHash.HashPassword("password");
 
             context.Users.AddOrUpdate(              
               new ApplicationUser
               {
-                  Email= "nickkhandev@gmail.com", EmailConfirmed=true, UserName="nickkhandev@gmail.com", FirstName = "Nick", LastName="Khan",  PasswordHash=password, Contacts = new List<Contact>()
+                  Email= "nickkhandev@gmail.com", EmailConfirmed=true, UserName="nickkhandev@gmail.com", FirstName = "Nick", LastName="Khan",  PasswordHash=password, SecurityStamp = Guid.NewGuid().ToString(), Contacts = new List<Contact>()
               {
                   new Contact() {
                     Id = Guid.NewGuid(),
@@ -82,7 +84,8 @@ namespace AddressBook.Migrations
               },
               new ApplicationUser
               {
-                  Email= "fawad.khan@hotmail.ca", UserName = "fawad.khan@hotmail.ca", FirstName= "Fawad",LastName="Khan", PasswordHash = password, Contacts = new List<Contact>()
+                  Email= "fawad.khan@hotmail.ca", UserName = "fawad.khan@hotmail.ca", FirstName= "Fawad",LastName="Khan", PasswordHash = password, SecurityStamp = Guid.NewGuid().ToString(),
+                  Contacts = new List<Contact>()
                   {
                       new Contact()
                       {
@@ -110,14 +113,20 @@ namespace AddressBook.Migrations
                       }
                   }
               },
-              new ApplicationUser { Email= "fkhan.dev@live.com", UserName = "fkhan.dev@live.com", FirstName="Faz", LastName="Khan", PasswordHash = password, Contacts= new List<Contact>()}
+              new ApplicationUser { Email= "fkhan.dev@live.com", UserName = "fkhan.dev@live.com", FirstName="Faz", LastName="Khan", PasswordHash = password, SecurityStamp = Guid.NewGuid().ToString(), Contacts = new List<Contact>()}
             );
             context.SaveChanges();
 
             // Add Users to Roles
             usermanager.AddToRole(context.Users.Where(u => u.UserName == "nickkhandev@gmail.com").FirstOrDefault().Id, "Admin");
+            usermanager.AddClaim(context.Users.Where(u => u.UserName == "nickkhandev@gmail.com").FirstOrDefault().Id, new System.Security.Claims.Claim(ClaimTypes.Role, "Admin"));
+
             usermanager.AddToRole(context.Users.Where(u => u.UserName == "fawad.khan@hotmail.ca").FirstOrDefault().Id, "Normal");
+            usermanager.AddClaim(context.Users.Where(u => u.UserName == "fawad.khan@hotmail.ca").FirstOrDefault().Id, new System.Security.Claims.Claim(ClaimTypes.Role, "Normal"));
+
             usermanager.AddToRole(context.Users.Where(u => u.UserName == "fkhan.dev@live.com").FirstOrDefault().Id, "Normal");
+            usermanager.AddClaim(context.Users.Where(u => u.UserName == "fkhan.dev@live.com").FirstOrDefault().Id, new System.Security.Claims.Claim(ClaimTypes.Role, "Normal"));            
+            
         }
     }
 }
